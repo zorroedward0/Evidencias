@@ -1,119 +1,31 @@
-use dbbiblioteca;
-SET FOREIGN_KEY_CHECKS = 0;
+use productores_agropecuarios_db;
+-- Tiposusuario
+INSERT INTO tipousuario (idtipoUsuario, nombre) VALUES 
+(1, 'Administrador'),
+(2, 'Cliente');
 
-TRUNCATE multa;
-TRUNCATE prestamo;
-TRUNCATE libroautor;
-TRUNCATE librocategoria;
-TRUNCATE libro;
-TRUNCATE autor;
-TRUNCATE categoria;
-TRUNCATE editorial;
-TRUNCATE usuario;
-TRUNCATE tipousuario;
+-- Usuarios
+INSERT INTO usuario (documento, nombre, apellido, email, telefono, estado, idTipoUsuario, password) VALUES 
+('1049654321', 'Ricardo', 'Almanza', 'r.almanza@agrored.com', '3104556677', 1, 1, '123'),
+('1052334455', 'Sandra', 'Milena', 'smilena@agrored.com', '3208889900', 1, 1, '123'),
+('1090223344', 'Carlos', 'Mario', 'cmario92@gmail.com', '3152223344', 1, 2, '123'),
+('1015667788', 'Beatriz', 'Pinzón', 'betty.pinzon@outlook.com', '3114445566', 1, 2, '123'),
+('1033445566', 'Julián', 'Andrés', 'jandres_88@hotmail.com', '3126667788', 1, 2, '123'),
+('1088554433', 'Mónica', 'Suarez', 'msuarez_campo@yahoo.com', '3183334455', 1, 2, '123'),
+('1077665544', 'Wilson', 'Gallego', 'wilson.gallego@gmail.com', '3005556677', 0, 2, '123'),
+('1044332211', 'Claudia', 'Vargas', 'claudia.vargas.agri@gmail.com', '3149990011', 1, 2, '123'),
+('1022339900', 'Fernando', 'Gaitán', 'fgaitan.productor@outlook.com', '3177778899', 1, 2, '123'),
+('1066778899', 'Patricia', 'Fernández', 'patricia.fdez@gmail.com', '3161112233', 1, 2, '123');
 
-SET FOREIGN_KEY_CHECKS = 1;
-
-INSERT INTO editorial (nombre,pais,sitioWeb) VALUES
-('Planeta','España','https://www.planetadelibros.com'),
-('Penguin Random House','USA','https://www.penguinrandomhouse.com'),
-('Alfaguara','España','https://www.alfaguara.com'),
-('Editorial Norma','Colombia','https://www.norma.com'),
-('Fondo de Cultura Económica','México','https://www.fce.com.mx');
-
-INSERT INTO autor (nombre,apellido,nacionalidad,fechaNacimiento) VALUES
-('Gabriel','Garcia Marquez','Colombiano','1927-03-06'),
-('Laura','Restrepo','Colombiana','1950-01-01'),
-('Hector','Abad Faciolince','Colombiano','1958-10-01'),
-('William','Ospina','Colombiano','1954-03-02'),
-('Jorge Luis','Borges','Argentino','1899-08-24'),
-('Isabel','Allende','Chilena','1942-08-02'),
-('Julio','Cortazar','Argentino','1914-08-26'),
-('Stephen','King','Estadounidense','1947-09-21'),
-('George','Orwell','Britanico','1903-06-25'),
-('J.K.','Rowling','Britanica','1965-07-31');
-
-INSERT INTO categoria (nombre,descripcion) VALUES
-('Novela','Narrativa'),
-('Realismo Magico','Literatura latinoamericana'),
-('Historia','Historia y politica'),
-('Fantasia','Mundos fantasticos'),
-('Terror','Suspenso y miedo'),
-('Drama','Historias humanas'),
-('Clasicos','Obras clasicas'),
-('Juvenil','Lectura juvenil'),
-('Ciencia Ficcion','Futuro y tecnologia'),
-('Biografia','Historias reales');
-
-
-INSERT INTO libro (titulo,isbn,añoPublicacion,numPag,disponible,idEditorial,destacado,imagen) VALUES
-('Cien años de soledad','ISBN001',1967,417,1,1,1,'1.jpg'),
-('El amor en los tiempos del colera','ISBN002',1985,348,1,1,0,'2.jpg'),
-('Cronica de una muerte anunciada','ISBN003',1981,122,1,1,0,'3.jpg'),
-('La hojarasca','ISBN004',1955,180,1,1,0,'4.jpg'),
-('Delirio','ISBN005',2004,330,1,3,0,'5.jpg'),
-('La isla de la pasion','ISBN006',1989,280,1,3,0,'6.jpg'),
-('El olvido que seremos','ISBN007',2006,350,1,4,1,'7.jpg'),
-('Angosta','ISBN008',2003,450,1,4,0,'8.jpg'),
-('El pais de la canela','ISBN009',2008,320,1,5,0,'9.jpg'),
-('La serpiente sin ojos','ISBN010',2012,300,1,5,0,'10.jpg'),
-
-('Ficciones','ISBN011',1944,200,1,2,0,'11.jpg'),
-('El Aleph','ISBN012',1949,190,1,2,0,'12.jpg'),
-('La casa de los espiritus','ISBN013',1982,450,1,3,0,'13.jpg'),
-('Rayuela','ISBN014',1963,600,1,2,0,'14.jpg'),
-('It','ISBN015',1986,1138,1,2,0,'15.jpg'),
-('Carrie','ISBN016',1974,250,1,2,0,'16.jpg'),
-('1984','ISBN017',1949,328,1,2,1,'17.jpg'),
-('Rebelion en la granja','ISBN018',1945,144,1,2,0,'18.jpg'),
-('Harry Potter y la piedra filosofal','ISBN019',1997,320,1,2,1,'19.jpg'),
-('Harry Potter y la camara secreta','ISBN020',1998,341,1,2,0,'20.jpg'),
-
-('El coronel no tiene quien le escriba','ISBN021',1961,120,1,1,0,'21.jpg'),
-('Noticia de un secuestro','ISBN022',1996,320,1,1,0,'22.jpg'),
-('Historia secreta de Costaguana','ISBN023',2007,400,1,5,0,'23.jpg'),
-('La tejedora de coronas','ISBN024',1982,500,1,5,0,'24.jpg'),
-('Los divinos','ISBN025',2018,280,1,3,0,'25.jpg'),
-('La forma de las ruinas','ISBN026',2015,450,1,3,0,'26.jpg'),
-('El ruido de las cosas al caer','ISBN027',2011,260,1,3,0,'27.jpg'),
-('Satanas','ISBN028',2002,300,1,4,0,'28.jpg'),
-('La sombra del viento','ISBN029',2001,565,1,1,0,'29.jpg'),
-('El codigo Da Vinci','ISBN030',2003,450,1,2,0,'30.jpg');
-
-INSERT INTO libroautor VALUES
-(1,1),(1,2),(1,3),(1,4),(2,5),(2,6),(3,7),(4,8),(4,9),(4,10),
-(5,11),(5,12),(6,13),(7,14),(8,15),(8,16),(9,17),(9,18),(10,19),(10,20);
-
-INSERT INTO librocategoria VALUES
-(1,2),(2,1),(3,1),(4,1),(5,6),(6,6),(7,10),(8,1),(9,3),(10,3),
-(11,7),(12,7),(13,1),(14,1),(15,5),(16,5),(17,7),(18,7),(19,4),(20,4),
-(21,2),(22,3),(23,1),(24,1),(25,6),(26,3),(27,1),(28,5),(29,1),(30,9);
-
-INSERT INTO tipousuario (nombre) VALUES ('Administrador'),('Cliente');
-
-INSERT INTO usuario (documento,nombre,apellido,email,telefono,estado,idTipoUsuario,password) VALUES
-('1010','Carlos','Rodriguez','carlos@gmail.com','3001111111',1,1,'1234'),
-('1011','Ana','Martinez','ana@gmail.com','3001111112',1,2,'1234'),
-('1012','Luis','Gomez','luis@gmail.com','3001111113',1,2,'1234'),
-('1013','Maria','Lopez','maria@gmail.com','3001111114',1,2,'1234'),
-('1014','Jorge','Castro','jorge@gmail.com','3001111115',1,2,'1234'),
-('1015','Sofia','Ramirez','sofia@gmail.com','3001111116',1,2,'1234'),
-('1016','Andres','Torres','andres@gmail.com','3001111117',1,2,'1234'),
-('1017','Valentina','Morales','vale@gmail.com','3001111118',1,2,'1234'),
-('1018','Camilo','Vargas','camilo@gmail.com','3001111119',1,2,'1234'),
-('1019','Daniela','Rojas','daniela@gmail.com','3001111120',1,2,'1234');
-
-UPDATE usuario SET password = '123' WHERE password = '1234';
-
-
-INSERT INTO prestamo (fechaPrestamo,fechaDevolucionEsperada,fechaDevolucionReal,estado,idLibro,idUsuario) VALUES
-('2026-01-01','2026-01-10',NULL,0,1,2),
-('2026-02-01','2026-02-10','2026-02-09',1,2,3),
-('2026-03-01','2026-03-10',NULL,0,3,4),
-('2026-03-20','2026-04-10',NULL,0,4,5),
-('2026-04-01','2026-04-20',NULL,0,5,6);
-
-
-
-
-
+-- Productores
+INSERT INTO productores (nombres, apellidos, cedula, vereda, telefono, correo, producto_principal, hectarea, tiene_riego, observacion, fecha_registro) VALUES 
+('Luis Alberto', 'Rodríguez', '74332110', 'El Pantano', '3104445511', 'lrodriguez@miagro.com', 'Café Pergamino', 4.50, 1, 'Finca La Esperanza, requiere renovación de cafetales.', '2024-03-20 08:30:00'),
+('Martha Cecilia', 'Gómez', '40332551', 'La Chapa', '3205556622', 'martha.gomez@gmail.com', 'Cacao', 10.25, 0, 'Terreno con buena sombra natural.', '2024-03-21 09:45:00'),
+('José Ignacio', 'López', '74112233', 'Sirivana', '3156667733', 'ignacio.lopez@yahoo.com', 'Arroz', 25.00, 1, 'Cuenta con sistema de riego por canales.', '2024-03-21 14:15:00'),
+('Carmen Rosa', 'Suarez', '23445566', 'El Venado', '3117778844', 'carmensuarez@outlook.com', 'Palma de Aceite', 30.00, 1, 'Producción constante, asociado a cooperativa.', '2024-03-22 10:00:00'),
+('Hernando', 'Pérez', '79554433', 'Tamarindo', '3128889955', 'hernandop@gmail.com', 'Maíz Amarillo', 12.80, 0, 'Suelo arcilloso, requiere drenajes.', '2024-03-22 11:30:00'),
+('Gloria Stella', 'Morales', '32114455', 'La Unión', '3189990066', 'stella.morales@miagro.com', 'Aguacate Hass', 3.20, 1, 'Certificación Global GAP en proceso.', '2024-03-23 15:20:00'),
+('Gabriel', 'Hernández', '19443322', 'San Rafael', '3141112277', 'gabriel_h@gmail.com', 'Plátano Hartón', 6.00, 0, 'Cultivo intercalado con café.', '2024-03-24 07:10:00'),
+('Yolanda', 'Díaz', '51667788', 'Los Olivos', '3172223388', 'yolandad@gmail.com', 'Flores de Corte', 2.10, 1, 'Cultivo bajo invernadero tecnificado.', '2024-03-24 16:40:00'),
+('Alvaro', 'Uribe', '70221100', 'El Recreo', '3163334499', 'alvaro.recreo@outlook.com', 'Ganadería de Leche', 50.00, 1, 'Pastos mejorados y ordeño mecánico.', '2024-03-25 08:00:00'),
+('Esperanza', 'Castillo', '20887766', 'Bellavista', '3004445500', 'espe_castillo@gmail.com', 'Cebolla Junca', 1.50, 1, 'Pequeña productora, venta en mercado local.', '2024-03-25 12:15:00');
