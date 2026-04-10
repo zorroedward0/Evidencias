@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`autor` (
   `fechaNacimiento` DATE NOT NULL,
   PRIMARY KEY (`idautor`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 9
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`categoria` (
   `descripcion` TEXT NOT NULL,
   PRIMARY KEY (`idcategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 23
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`editorial` (
   `sitioWeb` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`ideditorial`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 23
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -73,13 +73,15 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`libro` (
   `numPag` INT NOT NULL,
   `disponible` TINYINT NOT NULL,
   `idEditorial` INT NOT NULL,
+  `destacado` TINYINT NOT NULL,
+  `imagen` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`idlibro`),
   INDEX `fk_libro_editorial1_idx` (`idEditorial` ASC) VISIBLE,
   CONSTRAINT `fk_libro_editorial1`
     FOREIGN KEY (`idEditorial`)
     REFERENCES `dbbiblioteca`.`editorial` (`ideditorial`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -139,7 +141,28 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`prestamo` (
     FOREIGN KEY (`idLibro`)
     REFERENCES `dbbiblioteca`.`libro` (`idlibro`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
+AUTO_INCREMENT = 37
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `dbbiblioteca`.`multa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`multa` (
+  `idmulta` INT NOT NULL AUTO_INCREMENT,
+  `idPrestamo` INT NOT NULL,
+  `valor` INT NULL DEFAULT NULL,
+  `pagada` TINYINT NOT NULL,
+  `fecha` DATE NOT NULL,
+  PRIMARY KEY (`idmulta`),
+  INDEX `idPrestamo_idx` (`idPrestamo` ASC) VISIBLE,
+  CONSTRAINT `idPrestamo`
+    FOREIGN KEY (`idPrestamo`)
+    REFERENCES `dbbiblioteca`.`prestamo` (`idprestamo`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -152,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`tipousuario` (
   `nombre` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idtipoUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -176,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `dbbiblioteca`.`usuario` (
     FOREIGN KEY (`idTipoUsuario`)
     REFERENCES `dbbiblioteca`.`tipousuario` (`idtipoUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 15
+AUTO_INCREMENT = 39
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

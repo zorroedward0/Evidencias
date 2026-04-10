@@ -97,7 +97,7 @@ http://localhost:8080/AppBiblioteca
 
 Administrador:
 
-* Email: [juan1@mail.com](mailto:admin@admin.com)
+* Email: [carlos@gmail.com](mailto:admin@admin.com)
 * Password: 123
 
 Cliente:
