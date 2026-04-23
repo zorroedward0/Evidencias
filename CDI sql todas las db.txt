@@ -1,0 +1,560 @@
+
+
+SQLLITE
+
+
+
+PRAGMA foreign_keys = OFF;
+DROP TABLE IF EXISTS documentos_expedidos;
+DROP TABLE IF EXISTS ciudadanos;
+DROP TABLE IF EXISTS mesas_votacion;
+DROP TABLE IF EXISTS zonas_votacion;
+DROP TABLE IF EXISTS ciudades;
+DROP TABLE IF EXISTS usuario;
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE ciudades (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    departamento TEXT DEFAULT 'Boyacá',
+    codigo_dane TEXT UNIQUE
+);
+
+CREATE TABLE zonas_votacion (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_ciudad INTEGER,
+    nombre_zona TEXT NOT NULL,
+    puesto_votacion TEXT NOT NULL,
+    direccion TEXT NOT NULL,
+    FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
+);
+
+CREATE TABLE mesas_votacion (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_zona INTEGER,
+    numero_mesa INTEGER NOT NULL,
+    capacidad INTEGER DEFAULT 200,
+    FOREIGN KEY (id_zona) REFERENCES zonas_votacion(id)
+);
+
+CREATE TABLE ciudadanos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    numero_documento TEXT NOT NULL UNIQUE,
+    nombres TEXT NOT NULL,
+    apellidos TEXT NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    vereda_barrio TEXT NOT NULL,
+    telefono TEXT,
+    correo TEXT,
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_mesa INTEGER,
+    FOREIGN KEY (id_mesa) REFERENCES mesas_votacion(id)
+);
+
+CREATE TABLE documentos_expedidos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_ciudadano INTEGER,
+    tipo_documento TEXT NOT NULL,
+    numero_serie TEXT NOT NULL UNIQUE,
+    fecha_expedicion DATE NOT NULL,
+    fecha_vencimiento DATE,
+    estado TEXT DEFAULT 'vigente',
+    observaciones TEXT,
+    FOREIGN KEY (id_ciudadano) REFERENCES ciudadanos(id)
+);
+
+CREATE TABLE usuario (
+    idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
+    documento TEXT,
+    nombre TEXT,
+    apellido TEXT,
+    email TEXT UNIQUE,
+    telefono TEXT,
+    estado INTEGER DEFAULT 1,
+    password TEXT
+);
+
+INSERT INTO ciudades (nombre, departamento, codigo_dane) VALUES
+('Tunja','Boyacá','15001'),
+('Bogotá','Cundinamarca','11001'),
+('Duitama','Boyacá','15238'),
+('Sogamoso','Boyacá','15759'),
+('Paipa','Boyacá','15516'),
+('Chiquinquirá','Boyacá','15176'),
+('Villa de Leyva','Boyacá','15407'),
+('Soatá','Boyacá','15753'),
+('Moniquirá','Boyacá','15469'),
+('Garagoa','Boyacá','15299');
+
+INSERT INTO zonas_votacion (id_ciudad,nombre_zona,puesto_votacion,direccion) VALUES
+(1,'Zona Centro','Colegio Boyacá','Calle 19 #10-30'),
+(2,'Zona Norte','Colegio Distrital Usaquén','Cra 7 #120-20'),
+(3,'Zona Sur','Escuela Duitama Sur','Calle 15 #25-10'),
+(4,'Zona Industrial','Colegio Sogamoso','Cra 12 #8-50'),
+(5,'Zona Termales','Instituto Paipa','Calle 20 #18-40'),
+(6,'Zona Basílica','Colegio Chiquinquirá','Cra 5 #10-22'),
+(7,'Zona Turística','Escuela Villa de Leyva','Calle 12 #9-15'),
+(8,'Zona Norte Alta','Colegio Soatá','Cra 3 #6-11'),
+(9,'Zona Panelera','Escuela Moniquirá','Calle 8 #4-09'),
+(10,'Zona Centro','Colegio Garagoa','Cra 6 #7-33');
+
+INSERT INTO mesas_votacion (id_zona,numero_mesa,capacidad) VALUES
+(1,101,200),(2,102,200),(3,103,200),(4,104,200),(5,105,200),
+(6,106,200),(7,107,200),(8,108,200),(9,109,200),(10,110,200);
+
+INSERT INTO ciudadanos (numero_documento,nombres,apellidos,fecha_nacimiento,vereda_barrio,telefono,correo,id_mesa) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','1985-03-12','Barrio Centro','3101234567','juan.perez@gmail.com',1),
+('1030405060','María Fernanda','Gómez Ruiz','1990-07-22','Barrio Norte','3112345678','maria.gomez@hotmail.com',2),
+('1040506070','Luis Eduardo','Rodríguez López','1978-11-05','Barrio Sur','3123456789','luis.rodriguez@yahoo.com',3),
+('1050607080','Ana Milena','Martínez Díaz','1988-02-17','Barrio Industrial','3134567890','ana.martinez@gmail.com',4),
+('1060708090','Carlos Andrés','Ramírez Torres','1992-09-30','Barrio Termales','3145678901','carlos.ramirez@gmail.com',5),
+('1070809010','Laura Sofía','Castro Moreno','1995-01-14','Barrio Basílica','3156789012','laura.castro@gmail.com',6),
+('1080910111','Pedro José','Morales Rojas','1983-06-08','Barrio Turístico','3167890123','pedro.morales@gmail.com',7),
+('1091011121','Sofía Alejandra','Vargas Peña','1998-12-19','Barrio Norte','3178901234','sofia.vargas@gmail.com',8),
+('1101112131','Diego Fernando','Herrera Castro','1981-04-25','Barrio Centro','3189012345','diego.herrera@gmail.com',9),
+('1112131415','Elena Patricia','Suárez Gil','1987-10-10','Barrio Centro','3190123456','elena.suarez@gmail.com',10);
+
+INSERT INTO documentos_expedidos (id_ciudadano,tipo_documento,numero_serie,fecha_expedicion,fecha_vencimiento) VALUES
+(1,'CC','AA1001','2010-05-10','2030-05-10'),
+(2,'CC','AA1002','2011-06-12','2031-06-12'),
+(3,'CC','AA1003','2012-07-14','2032-07-14'),
+(4,'CC','AA1004','2013-08-16','2033-08-16'),
+(5,'CC','AA1005','2014-09-18','2034-09-18'),
+(6,'CC','AA1006','2015-10-20','2035-10-20'),
+(7,'CC','AA1007','2016-11-22','2036-11-22'),
+(8,'CC','AA1008','2017-12-24','2037-12-24'),
+(9,'CC','AA1009','2018-01-26','2038-01-26'),
+(10,'CC','AA1010','2019-02-28','2039-02-28');
+
+INSERT INTO usuario (documento,nombre,apellido,email,telefono,estado,password) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','juan.perez@gmail.com','3101234567',1,'123456'),
+('1030405060','María Fernanda','Gómez Ruiz','maria.gomez@hotmail.com','3112345678',1,'123456'),
+('1040506070','Luis Eduardo','Rodríguez López','luis.rodriguez@yahoo.com','3123456789',1,'123456'),
+('1050607080','Ana Milena','Martínez Díaz','ana.martinez@gmail.com','3134567890',1,'123456'),
+('1060708090','Carlos Andrés','Ramírez Torres','carlos.ramirez@gmail.com','3145678901',1,'123456'),
+('1070809010','Laura Sofía','Castro Moreno','laura.castro@gmail.com','3156789012',1,'123456'),
+('1080910111','Pedro José','Morales Rojas','pedro.morales@gmail.com','3167890123',1,'123456'),
+('1091011121','Sofía Alejandra','Vargas Peña','sofia.vargas@gmail.com','3178901234',1,'123456'),
+('1101112131','Diego Fernando','Herrera Castro','diego.herrera@gmail.com','3189012345',1,'123456'),
+('1112131415','Elena Patricia','Suárez Gil','elena.suarez@gmail.com','3190123456',1,'123456');
+
+
+
+
+POSTGRES
+
+
+
+
+
+
+DROP TABLE IF EXISTS documentos_expedidos CASCADE;
+DROP TABLE IF EXISTS ciudadanos CASCADE;
+DROP TABLE IF EXISTS mesas_votacion CASCADE;
+DROP TABLE IF EXISTS zonas_votacion CASCADE;
+DROP TABLE IF EXISTS ciudades CASCADE;
+DROP TABLE IF EXISTS usuario CASCADE;
+
+CREATE TABLE ciudades (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    departamento VARCHAR(100),
+    codigo_dane VARCHAR(10) UNIQUE
+);
+
+CREATE TABLE zonas_votacion (
+    id SERIAL PRIMARY KEY,
+    id_ciudad INTEGER REFERENCES ciudades(id),
+    nombre_zona VARCHAR(100),
+    puesto_votacion VARCHAR(100),
+    direccion TEXT
+);
+
+CREATE TABLE mesas_votacion (
+    id SERIAL PRIMARY KEY,
+    id_zona INTEGER REFERENCES zonas_votacion(id),
+    numero_mesa INTEGER,
+    capacidad INTEGER DEFAULT 200
+);
+
+CREATE TABLE ciudadanos (
+    id SERIAL PRIMARY KEY,
+    numero_documento VARCHAR(20) UNIQUE,
+    nombres VARCHAR(100),
+    apellidos VARCHAR(100),
+    fecha_nacimiento DATE,
+    vereda_barrio TEXT,
+    telefono VARCHAR(20),
+    correo VARCHAR(100),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_mesa INTEGER REFERENCES mesas_votacion(id)
+);
+
+CREATE TABLE documentos_expedidos (
+    id SERIAL PRIMARY KEY,
+    id_ciudadano INTEGER REFERENCES ciudadanos(id),
+    tipo_documento VARCHAR(50),
+    numero_serie VARCHAR(50) UNIQUE,
+    fecha_expedicion DATE,
+    fecha_vencimiento DATE,
+    estado VARCHAR(20) DEFAULT 'vigente',
+    observaciones TEXT
+);
+
+CREATE TABLE usuario (
+    idUsuario SERIAL PRIMARY KEY,
+    documento VARCHAR(20),
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    email VARCHAR(150) UNIQUE,
+    telefono VARCHAR(20),
+    estado BOOLEAN DEFAULT TRUE,
+    password VARCHAR(255)
+);
+
+INSERT INTO ciudades (nombre,departamento,codigo_dane) VALUES
+('Tunja','Boyacá','15001'),
+('Bogotá','Cundinamarca','11001'),
+('Duitama','Boyacá','15238'),
+('Sogamoso','Boyacá','15759'),
+('Paipa','Boyacá','15516'),
+('Chiquinquirá','Boyacá','15176'),
+('Villa de Leyva','Boyacá','15407'),
+('Soatá','Boyacá','15753'),
+('Moniquirá','Boyacá','15469'),
+('Garagoa','Boyacá','15299');
+
+INSERT INTO zonas_votacion (id_ciudad,nombre_zona,puesto_votacion,direccion) VALUES
+(1,'Zona Centro','Colegio Boyacá','Calle 19 #10-30'),
+(2,'Zona Norte','Colegio Distrital Usaquén','Cra 7 #120-20'),
+(3,'Zona Sur','Escuela Duitama Sur','Calle 15 #25-10'),
+(4,'Zona Industrial','Colegio Sogamoso','Cra 12 #8-50'),
+(5,'Zona Termales','Instituto Paipa','Calle 20 #18-40'),
+(6,'Zona Basílica','Colegio Chiquinquirá','Cra 5 #10-22'),
+(7,'Zona Turística','Escuela Villa de Leyva','Calle 12 #9-15'),
+(8,'Zona Norte Alta','Colegio Soatá','Cra 3 #6-11'),
+(9,'Zona Panelera','Escuela Moniquirá','Calle 8 #4-09'),
+(10,'Zona Centro','Colegio Garagoa','Cra 6 #7-33');
+
+INSERT INTO mesas_votacion (id_zona,numero_mesa,capacidad) VALUES
+(1,101,200),(2,102,200),(3,103,200),(4,104,200),(5,105,200),
+(6,106,200),(7,107,200),(8,108,200),(9,109,200),(10,110,200);
+
+INSERT INTO ciudadanos (numero_documento,nombres,apellidos,fecha_nacimiento,vereda_barrio,telefono,correo,id_mesa) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','1985-03-12','Barrio Centro','3101234567','juan.perez@gmail.com',1),
+('1030405060','María Fernanda','Gómez Ruiz','1990-07-22','Barrio Norte','3112345678','maria.gomez@hotmail.com',2),
+('1040506070','Luis Eduardo','Rodríguez López','1978-11-05','Barrio Sur','3123456789','luis.rodriguez@yahoo.com',3),
+('1050607080','Ana Milena','Martínez Díaz','1988-02-17','Barrio Industrial','3134567890','ana.martinez@gmail.com',4),
+('1060708090','Carlos Andrés','Ramírez Torres','1992-09-30','Barrio Termales','3145678901','carlos.ramirez@gmail.com',5),
+('1070809010','Laura Sofía','Castro Moreno','1995-01-14','Barrio Basílica','3156789012','laura.castro@gmail.com',6),
+('1080910111','Pedro José','Morales Rojas','1983-06-08','Barrio Turístico','3167890123','pedro.morales@gmail.com',7),
+('1091011121','Sofía Alejandra','Vargas Peña','1998-12-19','Barrio Norte','3178901234','sofia.vargas@gmail.com',8),
+('1101112131','Diego Fernando','Herrera Castro','1981-04-25','Barrio Centro','3189012345','diego.herrera@gmail.com',9),
+('1112131415','Elena Patricia','Suárez Gil','1987-10-10','Barrio Centro','3190123456','elena.suarez@gmail.com',10);
+
+INSERT INTO documentos_expedidos (id_ciudadano,tipo_documento,numero_serie,fecha_expedicion,fecha_vencimiento) VALUES
+(1,'CC','AA1001','2010-05-10','2030-05-10'),
+(2,'CC','AA1002','2011-06-12','2031-06-12'),
+(3,'CC','AA1003','2012-07-14','2032-07-14'),
+(4,'CC','AA1004','2013-08-16','2033-08-16'),
+(5,'CC','AA1005','2014-09-18','2034-09-18'),
+(6,'CC','AA1006','2015-10-20','2035-10-20'),
+(7,'CC','AA1007','2016-11-22','2036-11-22'),
+(8,'CC','AA1008','2017-12-24','2037-12-24'),
+(9,'CC','AA1009','2018-01-26','2038-01-26'),
+(10,'CC','AA1010','2019-02-28','2039-02-28');
+
+INSERT INTO usuario (documento,nombre,apellido,email,telefono,estado,password) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','juan.perez@gmail.com','3101234567',true,'123456'),
+('1030405060','María Fernanda','Gómez Ruiz','maria.gomez@hotmail.com','3112345678',true,'123456'),
+('1040506070','Luis Eduardo','Rodríguez López','luis.rodriguez@yahoo.com','3123456789',true,'123456'),
+('1050607080','Ana Milena','Martínez Díaz','ana.martinez@gmail.com','3134567890',true,'123456'),
+('1060708090','Carlos Andrés','Ramírez Torres','carlos.ramirez@gmail.com','3145678901',true,'123456'),
+('1070809010','Laura Sofía','Castro Moreno','laura.castro@gmail.com','3156789012',true,'123456'),
+('1080910111','Pedro José','Morales Rojas','pedro.morales@gmail.com','3167890123',true,'123456'),
+('1091011121','Sofía Alejandra','Vargas Peña','sofia.vargas@gmail.com','3178901234',true,'123456'),
+('1101112131','Diego Fernando','Herrera Castro','diego.herrera@gmail.com','3189012345',true,'123456'),
+('1112131415','Elena Patricia','Suárez Gil','elena.suarez@gmail.com','3190123456',true,'123456');
+
+
+
+
+
+
+H2
+
+
+
+
+
+
+DROP TABLE IF EXISTS documentos_expedidos;
+DROP TABLE IF EXISTS ciudadanos;
+DROP TABLE IF EXISTS mesas_votacion;
+DROP TABLE IF EXISTS zonas_votacion;
+DROP TABLE IF EXISTS ciudades;
+DROP TABLE IF EXISTS usuario;
+
+CREATE TABLE ciudades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    departamento VARCHAR(100),
+    codigo_dane VARCHAR(10) UNIQUE
+);
+
+CREATE TABLE zonas_votacion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_ciudad INT,
+    nombre_zona VARCHAR(100),
+    puesto_votacion VARCHAR(100),
+    direccion VARCHAR(255),
+    FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
+);
+
+CREATE TABLE mesas_votacion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_zona INT,
+    numero_mesa INT,
+    capacidad INT DEFAULT 200,
+    FOREIGN KEY (id_zona) REFERENCES zonas_votacion(id)
+);
+
+CREATE TABLE ciudadanos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero_documento VARCHAR(20) UNIQUE,
+    nombres VARCHAR(100),
+    apellidos VARCHAR(100),
+    fecha_nacimiento DATE,
+    vereda_barrio VARCHAR(255),
+    telefono VARCHAR(20),
+    correo VARCHAR(100),
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_mesa INT,
+    FOREIGN KEY (id_mesa) REFERENCES mesas_votacion(id)
+);
+
+CREATE TABLE documentos_expedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_ciudadano INT,
+    tipo_documento VARCHAR(50),
+    numero_serie VARCHAR(50) UNIQUE,
+    fecha_expedicion DATE,
+    fecha_vencimiento DATE,
+    estado VARCHAR(20) DEFAULT 'vigente',
+    observaciones VARCHAR(255),
+    FOREIGN KEY (id_ciudadano) REFERENCES ciudadanos(id)
+);
+
+CREATE TABLE usuario (
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    documento VARCHAR(20),
+    nombre VARCHAR(100),
+    apellido VARCHAR(100),
+    email VARCHAR(150) UNIQUE,
+    telefono VARCHAR(20),
+    estado BOOLEAN DEFAULT TRUE,
+    password VARCHAR(255)
+);
+
+INSERT INTO ciudades (nombre,departamento,codigo_dane) VALUES
+('Tunja','Boyacá','15001'),
+('Bogotá','Cundinamarca','11001'),
+('Duitama','Boyacá','15238'),
+('Sogamoso','Boyacá','15759'),
+('Paipa','Boyacá','15516'),
+('Chiquinquirá','Boyacá','15176'),
+('Villa de Leyva','Boyacá','15407'),
+('Soatá','Boyacá','15753'),
+('Moniquirá','Boyacá','15469'),
+('Garagoa','Boyacá','15299');
+
+INSERT INTO zonas_votacion (id_ciudad,nombre_zona,puesto_votacion,direccion) VALUES
+(1,'Zona Centro','Colegio Boyacá','Calle 19 #10-30'),
+(2,'Zona Norte','Colegio Distrital Usaquén','Cra 7 #120-20'),
+(3,'Zona Sur','Escuela Duitama Sur','Calle 15 #25-10'),
+(4,'Zona Industrial','Colegio Sogamoso','Cra 12 #8-50'),
+(5,'Zona Termales','Instituto Paipa','Calle 20 #18-40'),
+(6,'Zona Basílica','Colegio Chiquinquirá','Cra 5 #10-22'),
+(7,'Zona Turística','Escuela Villa de Leyva','Calle 12 #9-15'),
+(8,'Zona Norte Alta','Colegio Soatá','Cra 3 #6-11'),
+(9,'Zona Panelera','Escuela Moniquirá','Calle 8 #4-09'),
+(10,'Zona Centro','Colegio Garagoa','Cra 6 #7-33');
+
+INSERT INTO mesas_votacion (id_zona,numero_mesa,capacidad) VALUES
+(1,101,200),(2,102,200),(3,103,200),(4,104,200),(5,105,200),
+(6,106,200),(7,107,200),(8,108,200),(9,109,200),(10,110,200);
+
+INSERT INTO ciudadanos (numero_documento,nombres,apellidos,fecha_nacimiento,vereda_barrio,telefono,correo,id_mesa) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','1985-03-12','Barrio Centro','3101234567','juan.perez@gmail.com',1),
+('1030405060','María Fernanda','Gómez Ruiz','1990-07-22','Barrio Norte','3112345678','maria.gomez@hotmail.com',2),
+('1040506070','Luis Eduardo','Rodríguez López','1978-11-05','Barrio Sur','3123456789','luis.rodriguez@yahoo.com',3),
+('1050607080','Ana Milena','Martínez Díaz','1988-02-17','Barrio Industrial','3134567890','ana.martinez@gmail.com',4),
+('1060708090','Carlos Andrés','Ramírez Torres','1992-09-30','Barrio Termales','3145678901','carlos.ramirez@gmail.com',5),
+('1070809010','Laura Sofía','Castro Moreno','1995-01-14','Barrio Basílica','3156789012','laura.castro@gmail.com',6),
+('1080910111','Pedro José','Morales Rojas','1983-06-08','Barrio Turístico','3167890123','pedro.morales@gmail.com',7),
+('1091011121','Sofía Alejandra','Vargas Peña','1998-12-19','Barrio Norte','3178901234','sofia.vargas@gmail.com',8),
+('1101112131','Diego Fernando','Herrera Castro','1981-04-25','Barrio Centro','3189012345','diego.herrera@gmail.com',9),
+('1112131415','Elena Patricia','Suárez Gil','1987-10-10','Barrio Centro','3190123456','elena.suarez@gmail.com',10);
+
+INSERT INTO documentos_expedidos (id_ciudadano,tipo_documento,numero_serie,fecha_expedicion,fecha_vencimiento) VALUES
+(1,'CC','AA1001','2010-05-10','2030-05-10'),
+(2,'CC','AA1002','2011-06-12','2031-06-12'),
+(3,'CC','AA1003','2012-07-14','2032-07-14'),
+(4,'CC','AA1004','2013-08-16','2033-08-16'),
+(5,'CC','AA1005','2014-09-18','2034-09-18'),
+(6,'CC','AA1006','2015-10-20','2035-10-20'),
+(7,'CC','AA1007','2016-11-22','2036-11-22'),
+(8,'CC','AA1008','2017-12-24','2037-12-24'),
+(9,'CC','AA1009','2018-01-26','2038-01-26'),
+(10,'CC','AA1010','2019-02-28','2039-02-28');
+
+INSERT INTO usuario (documento,nombre,apellido,email,telefono,estado,password) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','juan.perez@gmail.com','3101234567',true,'123456'),
+('1030405060','María Fernanda','Gómez Ruiz','maria.gomez@hotmail.com','3112345678',true,'123456'),
+('1040506070','Luis Eduardo','Rodríguez López','luis.rodriguez@yahoo.com','3123456789',true,'123456'),
+('1050607080','Ana Milena','Martínez Díaz','ana.martinez@gmail.com','3134567890',true,'123456'),
+('1060708090','Carlos Andrés','Ramírez Torres','carlos.ramirez@gmail.com','3145678901',true,'123456'),
+('1070809010','Laura Sofía','Castro Moreno','laura.castro@gmail.com','3156789012',true,'123456'),
+('1080910111','Pedro José','Morales Rojas','pedro.morales@gmail.com','3167890123',true,'123456'),
+('1091011121','Sofía Alejandra','Vargas Peña','sofia.vargas@gmail.com','3178901234',true,'123456'),
+('1101112131','Diego Fernando','Herrera Castro','diego.herrera@gmail.com','3189012345',true,'123456'),
+('1112131415','Elena Patricia','Suárez Gil','elena.suarez@gmail.com','3190123456',true,'123456');
+
+
+
+
+
+SQL SERVER
+
+
+
+
+
+
+DROP TABLE IF EXISTS documentos_expedidos;
+DROP TABLE IF EXISTS ciudadanos;
+DROP TABLE IF EXISTS mesas_votacion;
+DROP TABLE IF EXISTS zonas_votacion;
+DROP TABLE IF EXISTS ciudades;
+DROP TABLE IF EXISTS usuario;
+
+CREATE TABLE ciudades (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nombre NVARCHAR(100),
+    departamento NVARCHAR(100),
+    codigo_dane NVARCHAR(10) UNIQUE
+);
+
+CREATE TABLE zonas_votacion (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_ciudad INT,
+    nombre_zona NVARCHAR(100),
+    puesto_votacion NVARCHAR(100),
+    direccion NVARCHAR(255),
+    FOREIGN KEY (id_ciudad) REFERENCES ciudades(id)
+);
+
+CREATE TABLE mesas_votacion (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_zona INT,
+    numero_mesa INT,
+    capacidad INT DEFAULT 200,
+    FOREIGN KEY (id_zona) REFERENCES zonas_votacion(id)
+);
+
+CREATE TABLE ciudadanos (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    numero_documento NVARCHAR(20) UNIQUE,
+    nombres NVARCHAR(100),
+    apellidos NVARCHAR(100),
+    fecha_nacimiento DATE,
+    vereda_barrio NVARCHAR(255),
+    telefono NVARCHAR(20),
+    correo NVARCHAR(100),
+    fecha_registro DATETIME DEFAULT GETDATE(),
+    id_mesa INT,
+    FOREIGN KEY (id_mesa) REFERENCES mesas_votacion(id)
+);
+
+CREATE TABLE documentos_expedidos (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    id_ciudadano INT,
+    tipo_documento NVARCHAR(50),
+    numero_serie NVARCHAR(50) UNIQUE,
+    fecha_expedicion DATE,
+    fecha_vencimiento DATE,
+    estado NVARCHAR(20) DEFAULT 'vigente',
+    observaciones NVARCHAR(255),
+    FOREIGN KEY (id_ciudadano) REFERENCES ciudadanos(id)
+);
+
+CREATE TABLE usuario (
+    idUsuario INT IDENTITY(1,1) PRIMARY KEY,
+    documento NVARCHAR(20),
+    nombre NVARCHAR(100),
+    apellido NVARCHAR(100),
+    email NVARCHAR(150) UNIQUE,
+    telefono NVARCHAR(20),
+    estado BIT DEFAULT 1,
+    password NVARCHAR(255)
+);
+
+INSERT INTO ciudades (nombre,departamento,codigo_dane) VALUES
+('Tunja','Boyacá','15001'),
+('Bogotá','Cundinamarca','11001'),
+('Duitama','Boyacá','15238'),
+('Sogamoso','Boyacá','15759'),
+('Paipa','Boyacá','15516'),
+('Chiquinquirá','Boyacá','15176'),
+('Villa de Leyva','Boyacá','15407'),
+('Soatá','Boyacá','15753'),
+('Moniquirá','Boyacá','15469'),
+('Garagoa','Boyacá','15299');
+
+INSERT INTO zonas_votacion (id_ciudad,nombre_zona,puesto_votacion,direccion)
+SELECT id,'Zona Centro','Puesto Principal','Dirección ' + CAST(id AS NVARCHAR) FROM ciudades;
+
+INSERT INTO mesas_votacion (id_zona,numero_mesa,capacidad)
+SELECT id,100+id,200 FROM zonas_votacion;
+
+INSERT INTO ciudadanos (numero_documento,nombres,apellidos,fecha_nacimiento,vereda_barrio,telefono,correo,id_mesa)
+SELECT 
+'10' + CAST(id AS NVARCHAR),
+'Nombre ' + CAST(id AS NVARCHAR),
+'Apellido ' + CAST(id AS NVARCHAR),
+'1985-01-01',
+'Barrio ' + CAST(id AS NVARCHAR),
+'310000000' + CAST(id AS NVARCHAR),
+'correo' + CAST(id AS NVARCHAR) + '@mail.com',
+id
+FROM mesas_votacion;
+
+INSERT INTO documentos_expedidos (id_ciudadano,tipo_documento,numero_serie,fecha_expedicion,fecha_vencimiento)
+SELECT id,'CC','AA' + CAST(id AS NVARCHAR),'2015-01-01','2035-01-01'
+FROM ciudadanos;
+
+INSERT INTO usuario (documento,nombre,apellido,email,telefono,estado,password) VALUES
+('1020304050','Juan Carlos','Pérez Gómez','juan.perez@gmail.com','3101234567',1,'123456'),
+('1030405060','María Fernanda','Gómez Ruiz','maria.gomez@hotmail.com','3112345678',1,'123456'),
+('1040506070','Luis Eduardo','Rodríguez López','luis.rodriguez@yahoo.com','3123456789',1,'123456'),
+('1050607080','Ana Milena','Martínez Díaz','ana.martinez@gmail.com','3134567890',1,'123456'),
+('1060708090','Carlos Andrés','Ramírez Torres','carlos.ramirez@gmail.com','3145678901',1,'123456'),
+('1070809010','Laura Sofía','Castro Moreno','laura.castro@gmail.com','3156789012',1,'123456'),
+('1080910111','Pedro José','Morales Rojas','pedro.morales@gmail.com','3167890123',1,'123456'),
+('1091011121','Sofía Alejandra','Vargas Peña','sofia.vargas@gmail.com','3178901234',1,'123456'),
+('1101112131','Diego Fernando','Herrera Castro','diego.herrera@gmail.com','3189012345',1,'123456'),
+('1112131415','Elena Patricia','Suárez Gil','elena.suarez@gmail.com','3190123456',1,'123456');
+
+
+
+
+
+
+
+
+
+
+
+
+
+

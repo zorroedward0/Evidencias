@@ -1,163 +1,302 @@
-# Sistema de Productores Agropecuarios Web - Java (Servlets + JSP)
+# Sistema de Gestión Civil y Electoral - Java (Servlets + JSP)
 
 ## Descripción
 
-Aplicación web desarrollada en Java utilizando arquitectura MVC, Servlets, JSP y MySQL.  
-Permite la gestión de productores agropecuarios y usuarios con control de acceso por roles (Administrador y Cliente).
+Aplicación web desarrollada en Java (javax) utilizando arquitectura MVC, Servlets y JSP.
 
-Este proyecto se encuentra en la rama:
+El sistema permite a la Registraduría Municipal de Nobsa (Boyacá) gestionar de forma centralizada la información civil y electoral de los ciudadanos, reemplazando el uso de hojas de cálculo desactualizadas.
 
-AppAgropecuario
+Incluye tres módulos principales:
 
----
+- Gestión de Ciudadanos  
+- Gestión de Documentos Expedidos  
+- Consulta Electoral (solo lectura)  
 
-## Estructura del proyecto
+Además, el sistema implementa un enfoque **Multi-DB dinámico**, permitiendo cambiar el motor de base de datos en tiempo de ejecución desde la aplicación sin modificar el código fuente.
 
-El repositorio contiene los siguientes archivos:
+Repositorio:  
+https://github.com/zorroedward0/Evidencias  
 
-📦 Evidencias  
- ┣ 📂 AppProductorAgropecuario final   → Proyecto web (NetBeans / Tomcat)  
- ┣ 📄 inserts completos.sql            → Inserts de datos de prueba  
- ┣ 📄 sql productores_db.sql           → Script de creación de BD  
- ┗ 📄 README.md  
+Rama:  
+AppRegistraduria  
 
 ---
 
 ## Tecnologías utilizadas
 
-* Java (JDK 8 o superior)
-* Servlets y JSP
-* Apache Tomcat 9+
-* MySQL
-* JDBC
-* Bootstrap (Frontend)
+- Java (JDK 8 o superior - javax)
+- Servlets y JSP
+- JSTL
+- Apache Tomcat 9+
+- JDBC
+- Bootstrap 5
+- Motores de base de datos:
+  - PostgreSQL (principal)
+  - SQLite
+  - H2
+  - SQL Server
+  - Supabase
 
 ---
 
-## Requisitos previos
+## Justificación del motor de base de datos
 
-Antes de ejecutar el proyecto debes tener instalado:
+El motor principal seleccionado fue **PostgreSQL**, debido a:
 
-* JDK 8 o superior  
-* Apache Tomcat  
-* MySQL WorkBench  
-* IDE (NetBeans)
+- Facilidad de conexión con JDBC  
+- Alto rendimiento en consultas  
+- Estabilidad y robustez  
+- Excelente manejo de relaciones y JOINs  
+- Compatibilidad con soluciones en la nube como Supabase  
 
 ---
 
-## Instalación
+## Soporte Multi-DB
 
-### 1. Clonar el repositorio e ir a la rama correspondiente
+El sistema permite trabajar con múltiples motores de base de datos configurables:
 
-```bash
+- PostgreSQL  
+- SQLite  
+- H2  
+- SQL Server  
+- Supabase  
+
+### Consideraciones importantes
+
+- Es necesario **crear la base de datos en cada motor** que se desee utilizar  
+- Se debe ejecutar el archivo:
+
+CDI sql todas las db.txt
+
+Este archivo contiene:
+
+- Sentencias `DROP`  
+- Sentencias `CREATE`  
+- Sentencias `INSERT`  
+
+Debe ejecutarse en cada motor para garantizar la misma estructura y datos iniciales.
+
+---
+
+## Configuración de base de datos
+
+El sistema utiliza el archivo:
+
+db.properties
+
+### Motor activo
+
+```properties
+db.engine=postgresql
+
+# PostgreSQL (LOCAL - PRINCIPAL)
+postgresql.url=jdbc:postgresql://localhost:5432/registraduria_db
+postgresql.user=postgres
+postgresql.password=123
+
+# SQLite (archivo local)
+sqlite.url=jdbc:sqlite:C:/Users/PC_18/Downloads/Adso Mañana/AppMultiDb/identifier.sqlite
+
+# H2 (modo local)
+h2.url=jdbc:h2:C:/Users/PC_18/Downloads/Adso Mañana/AppRegistraduriaMunicipal/Registraduria;AUTO_SERVER=TRUE
+
+# SQL Server
+sqlserver.url=jdbc:sqlserver://localhost:1433;databaseName=db_registraduria;encrypt=true;trustServerCertificate=true
+sqlserver.user=javaConexion
+sqlserver.password=Java123*
+
+# Supabase (PostgreSQL en la nube)
+supabase.url=jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require
+supabase.user=postgres.ddmvvjhtufkjcslermhv
+supabase.password=supabase123456789*10
+
+Notas importantes
+
+Para cambiar el motor de base de datos:
+
+
+db.engine=sqlite
+
+Para H2 y SQLite es necesario ajustar las rutas locales según el equipo
+
+Supabase requiere conexión a internet
+
+SQL Server debe estar previamente configurado
+
+
+
+---
+
+Selector dinámico de base de datos
+
+El sistema incluye una interfaz web que permite:
+
+Seleccionar el motor de base de datos
+
+Visualizar la base activa en sesión
+
+Validar el estado de conexión
+
+Cambiar de motor sin reiniciar la aplicación
+
+
+La selección se maneja mediante sesión (sessionScope.db) y un Servlet controlador.
+
+
+---
+
+Requisitos previos
+
+JDK 8 o superior
+
+Apache Tomcat
+
+IDE (NetBeans, IntelliJ o Eclipse)
+
+Motores de base de datos a utilizar
+
+
+
+---
+
+Instalación
+
+1. Clonar el repositorio
+
 git clone https://github.com/zorroedward0/Evidencias.git
 cd Evidencias
-git checkout AppAgropecuario
-```
+git checkout AppRegistraduria
+
+2. Crear la base de datos
+
+Ejemplo en PostgreSQL:
+
+CREATE DATABASE registraduria_db;
+
+3. Ejecutar script SQL
+
+Ejecutar el archivo:
+
+CDI sql todas las db.txt
+
+4. Configurar conexión
+
+Editar el archivo:
+
+db.properties
+
+Seleccionar el motor deseado con db.engine.
+
+5. Desplegar en Tomcat
+
+Importar el proyecto en el IDE
+
+Configurar servidor Tomcat
+
+Ejecutar la aplicación
+
+
 
 ---
 
-### 2. Configurar la base de datos
+Ejecución
 
-1. Crear la base de datos en MySQL:
+Abrir en navegador:
 
-```sql
-CREATE DATABASE productores_agropecuarios_db;
-USE productores_agropecuarios_db;
-```
+http://localhost:8080/RegistraduriaNobsa
 
-2. Ejecutar los scripts SQL incluidos en el proyecto:
-
-Ejecutar primero:
-
-```bash
-sql productores_db.sql
-```
-
-Luego ejecutar:
-
-```bash
-inserts completos.sql
-```
 
 ---
 
-### 3. Configurar conexión a la base de datos
+Funcionalidades
 
-Ubicar la clase de conexión (`ConexionDb.java`) y modificar:
+Módulo 1 — Gestión de Ciudadanos
 
-```java
-String url = "jdbc:mysql://localhost:3306/productores_agropecuarios_db";
-String user = "root";
-String password = "password";
-```
+Registrar ciudadanos
 
----
+Listar ciudadanos
 
-### 4. Importar el proyecto en el IDE
+Buscar por nombre o documento
 
-* Abrir el IDE  
-* Importar como proyecto web (Java Web)  
-* Import from zip o carpeta  
-* Seleccionar la carpeta **AppProductorAgropecuario final**
+Editar información
 
----
+Eliminar registros
 
-### 5. Configurar servidor Tomcat
 
-* Agregar Apache Tomcat al IDE  
-* Desplegar el proyecto en el servidor  
+Módulo 2 — Documentos Expedidos
 
----
+CRUD completo
 
-## Ejecución
+Tipos de documentos:
 
-1. Iniciar el servidor Tomcat  
-2. Abrir navegador en:
+Cédula
 
-```
-http://localhost:8080/AppAgropecuario
-```
+Tarjeta de identidad
 
----
+Registro civil
 
-## Credenciales de prueba
+Contraseña
 
-Administrador:
 
-* Email: r.almanza@agrored.com  
-* Password: 123  
+Incluye:
 
-Cliente:
+Número de serie único
 
-* Email: cmario92@gmail.com  
-* Password: 123  
+Fecha de expedición
 
----
+Fecha de vencimiento
 
-## Funcionalidades
+Estado (vigente, vencido, cancelado)
 
-* CRUD de Productores  
-* CRUD de Usuarios  
-* Sistema de Login con sesiones  
-* Control de acceso por roles  
-* Filtro de autenticación  
-* Interfaz con Bootstrap y modales  
+
+El listado muestra el nombre del ciudadano mediante consultas con JOIN.
+
+Módulo 3 — Consulta Electoral
+
+Consulta por número de documento
+
+Muestra ciudad, zona y mesa
+
+
+Si el ciudadano no tiene mesa asignada, el sistema muestra un mensaje informativo.
+
+Funciones adicionales:
+
+Listar mesas por zona
+
+Listar zonas por ciudad
+
+
 
 ---
 
-## Arquitectura
+Arquitectura
 
 El proyecto sigue el patrón MVC:
 
-* Model: Entidades (Usuario, TipoUsuario, Productor)  
-* View: JSP  
-* Controller: Servlets  
-* DAO: Acceso a datos  
+Model: Entidades
+
+View: JSP + JSTL
+
+Controller: Servlets
+
+DAO: Acceso a datos con JDBC
+
+
 
 ---
 
-## Autor
+Autor
 
-Eduar Danilo Paipilla Zorro  
-ADSO - SENA 🌱
+Eduar Danilo Paipilla Zorro
+ADSO - SENA
+
+
+---
+
+Licencia
+
+Uso académico y educativo.
+
+
+---
