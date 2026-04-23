@@ -4,7 +4,7 @@
 
 Aplicación web desarrollada en Java (javax) utilizando arquitectura MVC, Servlets y JSP.
 
-El sistema permite a la Registraduría Municipal de Nobsa (Boyacá) gestionar de forma centralizada la información civil y electoral de los ciudadanos, reemplazando el uso de hojas de cálculo desactualizadas.
+El sistema permite a la Registraduría gestionar de forma centralizada la información civil y electoral de los ciudadanos, reemplazando el uso de hojas de cálculo desactualizadas.
 
 Incluye tres módulos principales:
 
@@ -112,11 +112,11 @@ supabase.password=supabase123456789*10
 
 Notas importantes
 
-Para cambiar el motor de base de datos:
+Para forzar el cambio del motor de base de datos inicial:
 
 
 db.engine=sqlite
-
+```---
 Para H2 y SQLite es necesario ajustar las rutas locales según el equipo
 
 Supabase requiere conexión a internet
@@ -139,8 +139,6 @@ Validar el estado de conexión
 
 Cambiar de motor sin reiniciar la aplicación
 
-
-La selección se maneja mediante sesión (sessionScope.db) y un Servlet controlador.
 
 
 ---
@@ -167,7 +165,7 @@ git clone https://github.com/zorroedward0/Evidencias.git
 cd Evidencias
 git checkout AppRegistraduria
 
-2. Crear la base de datos
+2. Crear la base de datos (Cada una de las 5)
 
 Ejemplo en PostgreSQL:
 
@@ -175,7 +173,7 @@ CREATE DATABASE registraduria_db;
 
 3. Ejecutar script SQL
 
-Ejecutar el archivo:
+Seleccionar cada consulta segun motor de bases de datos en el archivo:
 
 CDI sql todas las db.txt
 
@@ -185,7 +183,8 @@ Editar el archivo:
 
 db.properties
 
-Seleccionar el motor deseado con db.engine.
+Para conexion correcta con SQLLITE y H2
+
 
 5. Desplegar en Tomcat
 
@@ -199,11 +198,8 @@ Ejecutar la aplicación
 
 ---
 
-Ejecución
+Ejecutar en el IDE Seleccionado
 
-Abrir en navegador:
-
-http://localhost:8080/RegistraduriaNobsa
 
 
 ---
@@ -258,7 +254,7 @@ Consulta por número de documento
 Muestra ciudad, zona y mesa
 
 
-Si el ciudadano no tiene mesa asignada, el sistema muestra un mensaje informativo.
+Si el ciudadano no tiene mesa asignada, el sistema muestra un icono referente.
 
 Funciones adicionales:
 
@@ -296,7 +292,7 @@ ADSO - SENA
 
 Licencia
 
-Uso académico y educativo.
+Uso académico y educativo.🏢
 
 
 ---
