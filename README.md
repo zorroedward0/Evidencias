@@ -1,4 +1,4 @@
-🏥 Sistema de Gestión de Vacunación – SaludBoyacá
+🏥 Sistema de Gestión de Salud – SaludBoyacá 🏥 
 
 Sistema web desarrollado en Jakarta EE (Servlets + JSP) para la administración de procesos de atención médica: gestión de pacientes, citas médicas, horarios, usuarios y reportes en PDF.
 
