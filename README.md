@@ -4,7 +4,9 @@ Sistema web desarrollado en Jakarta EE (Servlets + JSP) para la administración 
 
 🔗 Enlaces del proyecto
 [Repositorio Evidencias AppSaludBoyaca](https://github.com/zorroedward0/Evidencias/tree/AppSaludBoyaca)
+
 [Imagen Docker (versión v6):](https://hub.docker.com/repository/docker/4edward4/appsaludboyaca/tags/v6/sha256-c5252a024498dc726e979ee1ab7aa80a7c3ccfe4fcbc73d31a81b9e5ecb5fbaa)
+
 [Carpeta de Google Drive – Video Explicativo](https://drive.google.com/drive/folders/1wTLKCcO7MzEAiW8vR_025I3ku3qbWoCB)
 
 📌 Descripción del proyecto
