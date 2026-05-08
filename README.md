@@ -3,6 +3,7 @@
 Sistema web desarrollado en Jakarta EE (Servlets + JSP) para la administración de procesos de atención médica: gestión de pacientes, citas médicas, horarios, usuarios y reportes en PDF.
 
 🔗 Enlaces del proyecto
+
 [Repositorio Evidencias AppSaludBoyaca](https://github.com/zorroedward0/Evidencias/tree/AppSaludBoyaca)
 
 [Imagen Docker (versión v6):](https://hub.docker.com/repository/docker/4edward4/appsaludboyaca/tags/v6/sha256-c5252a024498dc726e979ee1ab7aa80a7c3ccfe4fcbc73d31a81b9e5ecb5fbaa)
@@ -24,7 +25,7 @@ Generación de reportes PDF
 Control de sesión y seguridad con filtros
 Internacionalización (i18n)
 
-🧠 Arquitectura utilizada
+Arquitectura utilizada--
 MVC (Modelo – Vista – Controlador)
 Capa	Tecnologías
 Vista (View)	JSP + JSTL + Bootstrap
@@ -39,7 +40,7 @@ HTML5 / CSS3 / JavaScript
 Filtros Servlet (AuthFilter & LocaleFilter)
 Generación de PDF
 
-🔐 Seguridad del sistema
+Seguridad del sistema: 
 Rutas protegidas
 /dashboard
 /citas
@@ -54,7 +55,7 @@ Internacionalización
 Idioma por defecto: Español (es)
 Resource bundle: messages.properties
 
-👥 Roles del sistema
+Roles del sistema:  
 Rol	Permisos
 Administrador	Gestión completa
 Médico	Ver citas y generar reportes
@@ -78,7 +79,7 @@ Usuario: jbaez
 Contraseña: recep123
 Rol: RECEPCIONISTA
 
-📅 Gestión de Citas
+Gestión de Citas:  
 
 El módulo principal permite:
 
@@ -104,6 +105,7 @@ Colores corporativos:
 Primario: #0E6655
 Secundario: #117864
 Acento: #1ABC9C
+
 ⚙️ Configuración del servidor
 
 Página inicial
@@ -118,6 +120,7 @@ Errores globales
 
 404 → /error.jsp
 500 → /error.jsp
+
 🐳 Ejecución con Docker
 
 1️⃣ Descargar imagen:
@@ -154,15 +157,5 @@ src/
  │    ├── WEB-INF/web.xml
  │    ├── jsp/
  │    └── resources/
-🚀 Características destacadas
-
-✔ Control de acceso por rol
-✔ Internacionalización lista
-✔ Arquitectura MVC
-✔ Generación de reportes PDF
-✔ Interfaz moderna
-✔ Despliegue con Docker
-
-👨‍💻 Proyecto académico
 
 Sistema de Gestión de Atención Médica – SaludBoyacá.
