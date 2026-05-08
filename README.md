@@ -147,15 +147,25 @@ Configurar base de datos
 Ejecutar en Tomcat
 Abrir en navegador
 http://localhost:8080/SistemaVacunacion
+
 📂 Estructura del proyecto
+
 src/
+
  ├── controller/
+ 
  ├── model/
+ 
  ├── dao/
+ 
  ├── util/
+ 
  ├── webapp/
+ 
  │    ├── WEB-INF/web.xml
+ 
  │    ├── jsp/
+ 
  │    └── resources/
 
 Sistema de Gestión de Atención Médica – SaludBoyacá.
