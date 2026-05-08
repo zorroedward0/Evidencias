@@ -1,302 +1,166 @@
-# Sistema de Gestión Civil y Electoral - Java (Servlets + JSP)
+🏥 Sistema de Gestión de Vacunación – SaludBoyacá
+
+Sistema web desarrollado en Jakarta EE (Servlets + JSP) para la administración de procesos de atención médica: gestión de pacientes, citas médicas, horarios, usuarios y reportes en PDF.
+
+🔗 Enlaces del proyecto
+[Repositorio Evidencias AppSaludBoyaca](https://github.com/zorroedward0/Evidencias/tree/AppSaludBoyaca)
+[Imagen Docker (versión v6):](https://hub.docker.com/repository/docker/4edward4/appsaludboyaca/tags/v6/sha256-c5252a024498dc726e979ee1ab7aa80a7c3ccfe4fcbc73d31a81b9e5ecb5fbaa)
+[Carpeta de Google Drive – Video Explicativo](https://drive.google.com/drive/folders/1wTLKCcO7MzEAiW8vR_025I3ku3qbWoCB)
+
+📌 Descripción del proyecto
+
+Aplicación web orientada a instituciones de salud que permite gestionar el flujo de atención médica mediante una interfaz moderna basada en Bootstrap.
+
+El sistema permite:
+
+Autenticación y control de roles
+Gestión de pacientes
+Gestión de citas médicas
+Gestión de horarios médicos
+Gestión de usuarios
+Generación de reportes PDF
+Control de sesión y seguridad con filtros
+Internacionalización (i18n)
+
+🧠 Arquitectura utilizada
+MVC (Modelo – Vista – Controlador)
+Capa	Tecnologías
+Vista (View)	JSP + JSTL + Bootstrap
+Controlador (Controller)	Servlets
+Modelo (Model)	POJOs + DAO + Base de datos
+🛠 Tecnologías usadas
+Jakarta EE 10 (Servlet 6.0)
+JSP + JSTL
+Bootstrap 5
+FontAwesome
+HTML5 / CSS3 / JavaScript
+Filtros Servlet (AuthFilter & LocaleFilter)
+Generación de PDF
+
+🔐 Seguridad del sistema
+Rutas protegidas
+/dashboard
+/citas
+/horarios
+/pacientes
+/registros
+/usuarios
+
+Acceso permitido solo con sesión activa.
+
+Internacionalización
+Idioma por defecto: Español (es)
+Resource bundle: messages.properties
+
+👥 Roles del sistema
+Rol	Permisos
+Administrador	Gestión completa
+Médico	Ver citas y generar reportes
+Enfermero	Consulta limitada
+Recepcionista	Gestión de pacientes y citas
+
+🔑 Credenciales de prueba
+
+👨‍⚕️ Médico
+Usuario: cpedraza
+Contraseña: admin123
+Rol: MEDICO
+
+👩‍⚕️ Enfermero
+Usuario: msuarez
+Contraseña: enfermero1
+Rol: ENFERMERO
+
+🧑‍💼 Recepcionista
+Usuario: jbaez
+Contraseña: recep123
+Rol: RECEPCIONISTA
+
+📅 Gestión de Citas
+
+El módulo principal permite:
+
+Crear y editar citas
+Cambiar estados:
+PROGRAMADA
+CONFIRMADA
+ATENDIDA
+CANCELADA
+Generar PDF por médico
+Generar PDF por paciente
+🧾 Reportes PDF
+Reporte de citas por médico
+Reporte de citas por paciente
+🎨 Interfaz de usuario
+Sidebar colapsable
+Dashboard moderno
+Tablas interactivas
+Diseño responsivo
+
+Colores corporativos:
+
+Primario: #0E6655
+Secundario: #117864
+Acento: #1ABC9C
+⚙️ Configuración del servidor
 
-## Descripción
+Página inicial
 
-Aplicación web desarrollada en Java (javax) utilizando arquitectura MVC, Servlets y JSP.
+/login
 
-El sistema permite a la Registraduría Municipal de Nobsa (Boyacá) gestionar de forma centralizada la información civil y electoral de los ciudadanos, reemplazando el uso de hojas de cálculo desactualizadas.
+Timeout de sesión
 
-Incluye tres módulos principales:
+30 minutos
 
-- Gestión de Ciudadanos  
-- Gestión de Documentos Expedidos  
-- Consulta Electoral (solo lectura)  
+Errores globales
 
-Además, el sistema implementa un enfoque **Multi-DB dinámico**, permitiendo cambiar el motor de base de datos en tiempo de ejecución desde la aplicación sin modificar el código fuente.
+404 → /error.jsp
+500 → /error.jsp
+🐳 Ejecución con Docker
 
-Repositorio:  
-https://github.com/zorroedward0/Evidencias  
+1️⃣ Descargar imagen:
 
-Rama:  
-AppRegistraduria  
+docker pull 4edward4/appsaludboyaca:v6
 
----
+2️⃣ Ejecutar contenedor:
 
-## Tecnologías utilizadas
+docker run -p 8080:8080 4edward4/appsaludboyaca:v6
 
-- Java (JDK 8 o superior - javax)
-- Servlets y JSP
-- JSTL
-- Apache Tomcat 9+
-- JDBC
-- Bootstrap 5
-- Motores de base de datos:
-  - PostgreSQL (principal)
-  - SQLite
-  - H2
-  - SQL Server
-  - Supabase
+3️⃣ Abrir en navegador:
 
----
+http://localhost:8080/SistemaVacunacion
 
-## Justificación del motor de base de datos
+▶️ Ejecución manual (sin Docker)
+Requisitos
+JDK 17+
+Apache Tomcat 10+
+MySQL o PostgreSQL
+Pasos
+git clone <repo>
+Importar en IDE
+Configurar base de datos
+Ejecutar en Tomcat
+Abrir en navegador
+http://localhost:8080/SistemaVacunacion
+📂 Estructura del proyecto
+src/
+ ├── controller/
+ ├── model/
+ ├── dao/
+ ├── util/
+ ├── webapp/
+ │    ├── WEB-INF/web.xml
+ │    ├── jsp/
+ │    └── resources/
+🚀 Características destacadas
 
-El motor principal seleccionado fue **PostgreSQL**, debido a:
+✔ Control de acceso por rol
+✔ Internacionalización lista
+✔ Arquitectura MVC
+✔ Generación de reportes PDF
+✔ Interfaz moderna
+✔ Despliegue con Docker
 
-- Facilidad de conexión con JDBC  
-- Alto rendimiento en consultas  
-- Estabilidad y robustez  
-- Excelente manejo de relaciones y JOINs  
-- Compatibilidad con soluciones en la nube como Supabase  
+👨‍💻 Proyecto académico
 
----
-
-## Soporte Multi-DB
-
-El sistema permite trabajar con múltiples motores de base de datos configurables:
-
-- PostgreSQL  
-- SQLite  
-- H2  
-- SQL Server  
-- Supabase  
-
-### Consideraciones importantes
-
-- Es necesario **crear la base de datos en cada motor** que se desee utilizar  
-- Se debe ejecutar el archivo:
-
-CDI sql todas las db.txt
-
-Este archivo contiene:
-
-- Sentencias `DROP`  
-- Sentencias `CREATE`  
-- Sentencias `INSERT`  
-
-Debe ejecutarse en cada motor para garantizar la misma estructura y datos iniciales.
-
----
-
-## Configuración de base de datos
-
-El sistema utiliza el archivo:
-
-db.properties
-
-### Motor activo
-
-```properties
-db.engine=postgresql
-
-# PostgreSQL (LOCAL - PRINCIPAL)
-postgresql.url=jdbc:postgresql://localhost:5432/registraduria_db
-postgresql.user=postgres
-postgresql.password=123
-
-# SQLite (archivo local)
-sqlite.url=jdbc:sqlite:C:/Users/PC_18/Downloads/Adso Mañana/AppMultiDb/identifier.sqlite
-
-# H2 (modo local)
-h2.url=jdbc:h2:C:/Users/PC_18/Downloads/Adso Mañana/AppRegistraduriaMunicipal/Registraduria;AUTO_SERVER=TRUE
-
-# SQL Server
-sqlserver.url=jdbc:sqlserver://localhost:1433;databaseName=db_registraduria;encrypt=true;trustServerCertificate=true
-sqlserver.user=javaConexion
-sqlserver.password=Java123*
-
-# Supabase (PostgreSQL en la nube)
-supabase.url=jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require
-supabase.user=postgres.ddmvvjhtufkjcslermhv
-supabase.password=supabase123456789*10
-
-Notas importantes
-
-Para cambiar el motor de base de datos:
-
-
-db.engine=sqlite
-
-Para H2 y SQLite es necesario ajustar las rutas locales según el equipo
-
-Supabase requiere conexión a internet
-
-SQL Server debe estar previamente configurado
-
-
-
----
-
-Selector dinámico de base de datos
-
-El sistema incluye una interfaz web que permite:
-
-Seleccionar el motor de base de datos
-
-Visualizar la base activa en sesión
-
-Validar el estado de conexión
-
-Cambiar de motor sin reiniciar la aplicación
-
-
-La selección se maneja mediante sesión (sessionScope.db) y un Servlet controlador.
-
-
----
-
-Requisitos previos
-
-JDK 8 o superior
-
-Apache Tomcat
-
-IDE (NetBeans, IntelliJ o Eclipse)
-
-Motores de base de datos a utilizar
-
-
-
----
-
-Instalación
-
-1. Clonar el repositorio
-
-git clone https://github.com/zorroedward0/Evidencias.git
-cd Evidencias
-git checkout AppRegistraduria
-
-2. Crear la base de datos
-
-Ejemplo en PostgreSQL:
-
-CREATE DATABASE registraduria_db;
-
-3. Ejecutar script SQL
-
-Ejecutar el archivo:
-
-CDI sql todas las db.txt
-
-4. Configurar conexión
-
-Editar el archivo:
-
-db.properties
-
-Seleccionar el motor deseado con db.engine.
-
-5. Desplegar en Tomcat
-
-Importar el proyecto en el IDE
-
-Configurar servidor Tomcat
-
-Ejecutar la aplicación
-
-
-
----
-
-Ejecución
-
-Abrir en navegador:
-
-http://localhost:8080/RegistraduriaNobsa
-
-
----
-
-Funcionalidades
-
-Módulo 1 — Gestión de Ciudadanos
-
-Registrar ciudadanos
-
-Listar ciudadanos
-
-Buscar por nombre o documento
-
-Editar información
-
-Eliminar registros
-
-
-Módulo 2 — Documentos Expedidos
-
-CRUD completo
-
-Tipos de documentos:
-
-Cédula
-
-Tarjeta de identidad
-
-Registro civil
-
-Contraseña
-
-
-Incluye:
-
-Número de serie único
-
-Fecha de expedición
-
-Fecha de vencimiento
-
-Estado (vigente, vencido, cancelado)
-
-
-El listado muestra el nombre del ciudadano mediante consultas con JOIN.
-
-Módulo 3 — Consulta Electoral
-
-Consulta por número de documento
-
-Muestra ciudad, zona y mesa
-
-
-Si el ciudadano no tiene mesa asignada, el sistema muestra un mensaje informativo.
-
-Funciones adicionales:
-
-Listar mesas por zona
-
-Listar zonas por ciudad
-
-
-
----
-
-Arquitectura
-
-El proyecto sigue el patrón MVC:
-
-Model: Entidades
-
-View: JSP + JSTL
-
-Controller: Servlets
-
-DAO: Acceso a datos con JDBC
-
-
-
----
-
-Autor
-
-Eduar Danilo Paipilla Zorro
-ADSO - SENA
-
-
----
-
-Licencia
-
-Uso académico y educativo.
-
-
----
+Sistema de Gestión de Atención Médica – SaludBoyacá.
