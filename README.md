@@ -157,12 +157,14 @@ El módulo principal permite:
 ## Página inicial
 
 ```txt
+
 /login
 Timeout de sesión
 30 minutos
 Errores globales
 404 → /error.jsp
 500 → /error.jsp
+
 🐳 Ejecución con Docker
 1️⃣ Descargar imagen
 docker pull 4edward4/appsaludboyaca:v6
@@ -171,17 +173,19 @@ docker run -p 8080:8080 4edward4/appsaludboyaca:v6
 3️⃣ Abrir en navegador
 http://localhost:8080/SistemaVacunacion
 ▶️ Ejecución manual (sin Docker)
+
 Requisitos
 JDK 17+
 Apache Tomcat 10+
 MySQL o PostgreSQL
 Pasos
-git clone <repo>
+git clone https://github.com/zorroedward0/Evidencias
+git checkout AppSaludBoyaca
 Importar en IDE
-Configurar base de datos
 Ejecutar en Tomcat
 Abrir en navegador
 http://localhost:8080/SistemaVacunacion
+
 📂 Estructura del proyecto
 src/
 │
@@ -193,4 +197,6 @@ src/
 │   ├── WEB-INF/web.xml
 │   ├── jsp/
 │   └── resources/
+
+
 🏥 Sistema de Gestión de Atención Médica – SaludBoyacá
