@@ -1,0 +1,112 @@
+<nav class="navbar navbar-expand-lg navbar-saas"
+     th:fragment="nav">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand"
+           th:href="@{/}">
+
+            <div class="logo-box">
+                <i class="fa-solid fa-syringe"></i>
+            </div>
+
+            <div class="brand-content">
+
+                <span class="brand-title"
+                      th:text="#{navbar.system}">
+                </span>
+
+            </div>
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between"
+             id="navbarContent">
+
+            <ul class="navbar-nav navbar-center mx-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/pacientes}">
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <span th:text="#{navbar.patients}"></span>
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/vacunas}">
+
+                        <i class="fa-solid fa-shield-virus"></i>
+
+                        <span th:text="#{navbar.vaccines}"></span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+            <div class="navbar-actions">
+
+                <div class="dropdown">
+
+                    <button class="btn btn-light btn-sm dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+
+                        <i class="fa-solid fa-globe"></i>
+
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               th:href="@{''(lang='es')}">
+
+                                🇪🇸 <span th:text="#{navbar.language.es}"></span>
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               th:href="@{''(lang='en')}">
+
+                                🇺🇸 <span th:text="#{navbar.language.en}"></span>
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
