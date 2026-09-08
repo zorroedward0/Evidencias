@@ -1,0 +1,9 @@
+.screen {
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  text-align: center;
+}
+.title { color: var(--accent); font-size: 3rem; }
+.hint { color: var(--text-muted); }
